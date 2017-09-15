@@ -39,7 +39,7 @@ volatile uint8_t uart_bytes_in_queue;  // Number of available bytes in the queue
 uint8_t *uart_rx_push_ptr;             // Queue pointer for pushing data
 uint8_t *uart_rx_pull_ptr;             // Queue pointer for pulling data
 
-volatile uint16_t rxByte;
+// volatile uint16_t rxByte;
 
 /*---------------------------------------------------------*/
 /* MIDI decoder                                            */
@@ -70,8 +70,8 @@ volatile uint16_t rxByte;
 #define CC_POLY_MODE_ON          0x7F
 
 /* MIDI System Messages */
-#define SYSEX_OUT 0xF7
 #define SYSEX_IN  0xF0
+#define SYSEX_OUT 0xF7
 
 #define MAX_DATA 0x7F
 
@@ -200,6 +200,19 @@ void iosetup(void)
     PORTD = _BV(PD2) | _BV(PD3) | _BV(PD4) | _BV(PD5) | _BV(PD6);
 }
 
+
+/**
+ * Initialize MIDI decoder
+ */
+void init_midi_decoder()
+{
+    midi_status = 0;
+    midi_message = 0;
+    midi_channel = 0xFF;
+    midi_data_ptr= 0;
+    midi_data_length= 1;
+    midi_data_ready = 0;
+}
 
 ////////////////////////////////
 // UART data receiver functions
@@ -418,17 +431,7 @@ void handle_midi_channel_message()
     }
 }
 
-void init_midi_parser()
-{
-    midi_status = 0;
-    midi_message = 0;
-    midi_channel = 0xFF;
-    midi_data_ptr= 0;
-    midi_data_length= 1;
-    midi_data_ready = 0;
-}
-
-void parse_and_handle()
+void digest(uint16_t rxByte)
 {
     if (isSystemExclusive(midi_status)) {
         if (rxByte == SYSEX_OUT) {
@@ -546,7 +549,7 @@ int main(void)
     init_uart();
     init_timer();
 
-    init_midi_parser();
+    init_midi_decoder();
     init_midi_controllers();
 
     key_prev = 0;
@@ -555,9 +558,9 @@ int main(void)
     sei();
 
     while (true) {
-        rxByte = uart_getchar();
+        uint16_t rxByte = uart_getchar();
         if (rxByte != -1) {
-            parse_and_handle();
+            digest(rxByte);
         }
     }
 }
