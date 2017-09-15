@@ -4,6 +4,8 @@
 
  MInIBoard 2 は、Analog2.0 の簡易的なコントローラです。
 
+![doc/miniboard.jpg](doc/miniboard.jpg)
+
 以下のような機能を持っています。
 
 - ライフラインケーブルに接続して、CV と Gate 信号を発生する。CV および Gate はライフラインのバスに出力する。
