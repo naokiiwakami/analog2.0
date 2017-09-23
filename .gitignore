@@ -2,3 +2,4 @@ Debug
 .vs
 Thumbs.db
 .#.gitignore
+*.DS_Store
