@@ -118,6 +118,12 @@ a20_midi.hex
 $ avrdude -c usbasp -p t2313 -U lfuse:w:0xcf:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m -U flash:w:a20_midi.hex
 ```
 
+a20_midi.elf ファイルには fuse バイト情報も含まれているので、fuse にどんな値を入れるのか気にせず以下のように書き込むこともできます。ただし AVRDUDE はバージョン6以上のものを使う必要があります。
+
+```
+$ avrdude -c usbasp -p t2313 -U lfuse:w:miniboard2_firmware.elf -U hfuse:w:miniboard2_firmware.elf -U efuse:w:miniboard2_firmware.elf -U flash:w:miniboard2_firmware.elf
+```
+
 この操作で書き込みの確認も行われるので、実行が成功すればこれで書き込みは完了です。
 
 #### 動作確認
