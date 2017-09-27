@@ -5,7 +5,7 @@ MiniBoard 2 を動かすには、AVR マイクロプロセッサ ATTiny2313 に�
 ソースコードからビルドすることによって入手できます。
 
 ### ファームウェアのダウンロード
-リポジトリ内のディレクトリ [10_miniboard/firmware/releases](../10_miniboard/firmware/releases/)
+リポジトリ内のディレクトリ [10_miniboard/firmware/releases](../firmware/releases/)
 からファイル名についている日付の一番新しい zip ファイルをダウンロードしてください。現在の最新版は miniboard_20110226.zip です。
 zip ファイル内には、以下のファイルが含まれています。
 - a20_midi.elf : ファームウェアイメージ 
@@ -20,7 +20,7 @@ zip ファイル内には、以下のファイルが含まれています。
 
 http://www.atmel.com/microsite/atmel-studio/
 
-ディレクトリ [10_miniboard\firmware\miniboard2_firmware](../10_miniboard/firmware/miniboard2_firmware) の下の Atmel Studio ソリューションファイル [firmware.atsln](../10_miniboard/firmware/miniboard2_firmware/firmware.atsln) を開いて、
+ディレクトリ [10_miniboard\firmware\miniboard2_firmware](../firmware/miniboard2_firmware) の下の Atmel Studio ソリューションファイル [firmware.atsln](../firmware/firmware.atsln) を開いて、
 プロジェクト `miniboard2_firmware` をビルドしてください。ファームウェアはプロジェクトディレクトリの下の `Release` ディレクトリにビルドされます。
 ファイル名は `a20_midi.elf` と `a20_midi.hex`です。
 
