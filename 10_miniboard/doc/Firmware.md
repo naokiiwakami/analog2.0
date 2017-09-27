@@ -17,6 +17,6 @@ zip ファイル内には、以下のファイルが含まれています。
 
 http://www.atmel.com/microsite/atmel-studio/
 
-ディレクトリ `10_miniboard\firmware\miniboard2_firmware` の下の Atmel Studio ソリューションファイル firmware.atsln を開いて、
+ディレクトリ [10_miniboard\firmware\miniboard2_firmware](../10_miniboard/firmware/miniboard2_firmware) の下の Atmel Studio ソリューションファイル [firmware.atsln](../10_miniboard/firmware/miniboard2_firmware/firmware.atsln) を開いて、
 プロジェクト `miniboard2_firmware` をビルドしてください。ファームウェアはプロジェクトディレクトリの下の `Debug` ディレクトリにビルドされます。
 ファイル名は miniboard2_firmware.hex です。
