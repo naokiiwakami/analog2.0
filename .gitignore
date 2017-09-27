@@ -1,5 +1,6 @@
-Debug
+10_miniboard/firmware/miniboard2_firmware/Debug
+10_miniboard/firmware/miniboard2_firmware/Release
 .vs
 Thumbs.db
-.#.gitignore
+.#*
 *.DS_Store
