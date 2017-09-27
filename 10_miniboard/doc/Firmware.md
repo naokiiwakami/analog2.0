@@ -34,7 +34,7 @@ http://www.atmel.com/microsite/atmel-studio/
   上述のとおり
 
 - **AVRプログラマ (ハードウェア)** <br />
-  「AVRライタ」とも呼ばれます。AVRプロセッサに書き込みを行うためのハードウェアデバイスです。
+  「AVRライタ」とも呼ばれます。AVRプロセッサに書き込みを行うためのデバイスです。
   Atmel / Microchip の安価な純正品だった [AVRISP mkII](http://www.atmel.com/tools/avrispmkii.aspx) は残念ながら販売終了してしまいました。ほかに入手可能な純正品には、以下のようなものがあります。
 
   - [AVR Dragon](http://www.atmel.com/tools/avrdragon.aspx)
