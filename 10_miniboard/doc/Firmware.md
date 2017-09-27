@@ -30,10 +30,10 @@ http://www.atmel.com/microsite/atmel-studio/
 
 ファームウェアの書き込みには、以下のものが必要です。
 
-- **ファームウェアイメージ** 
+- **ファームウェアイメージ** <br />
   上述のとおり
 
-- **AVRプログラマ (ハードウェア)**
+- **AVRプログラマ (ハードウェア)** <br />
   「AVRライタ」とも呼ばれます。AVRプロセッサに書き込みを行うためのハードウェアデバイスです。
   Atmel / Microchip の安価な純正品だった AVRISP mkII は残念ながら販売終了してしまいました。ほかに入手可能な純正品には、以下のようなものがあります。
 
@@ -44,13 +44,13 @@ http://www.atmel.com/microsite/atmel-studio/
 
   以下は、書き込みができることを確認したプログラマです。
 
-  - Atmel / Microchip
+  - Atmel / Microchip <br />
     - AVRISP mkII http://www.atmel.com/tools/avrispmkii.aspx (Windows)
-  - サードパーティー
+  - サードパーティー <br />
     - Aitendo USB-ASP2 http://www.aitendo.com/product/10259 (MacOS)<br />
       元となったプログラマ http://www.fischl.de/usbasp/
 
-- **AVRプログラマ (ソフトウェア)**
+- **AVRプログラマ (ソフトウェア)** <br />
   実際に書き込みを行うソフトウェアです。Atmel Studio に付属しているので、Atmel Studio が認識できるプログラマなら別にソフトウェアを用意する必要はありません。そうでない場合、[AVRDUDE](http://www.nongnu.org/avrdude/) がよく使われるソフトウェアです。このページの書き込み例でも AVRDUDE を使います。
 
 - AVRプログラマとMiniboard II プロセッサをつなぐケーブル
