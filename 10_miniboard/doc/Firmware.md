@@ -35,10 +35,10 @@ http://www.atmel.com/microsite/atmel-studio/
 
 - **AVRプログラマ (ハードウェア)** <br />
   「AVRライタ」とも呼ばれます。AVRプロセッサに書き込みを行うためのハードウェアデバイスです。
-  Atmel / Microchip の安価な純正品だった AVRISP mkII は残念ながら販売終了してしまいました。ほかに入手可能な純正品には、以下のようなものがあります。
+  Atmel / Microchip の安価な純正品だった [AVRISP mkII](http://www.atmel.com/tools/avrispmkii.aspx) は残念ながら販売終了してしまいました。ほかに入手可能な純正品には、以下のようなものがあります。
 
-  - AVR Dragon
-  - ATAtmel-ICE
+  - [AVR Dragon](http://www.atmel.com/tools/avrdragon.aspx)
+  - [ATAtmel-ICE](http://www.atmel.com/tools/atatmel-ice.aspx)
 
   純正品でない安価なプログラマも入手可能です。
 
@@ -54,6 +54,15 @@ http://www.atmel.com/microsite/atmel-studio/
   実際に書き込みを行うソフトウェアです。Atmel Studio に付属しているので、Atmel Studio が認識できるプログラマなら別にソフトウェアを用意する必要はありません。そうでない場合、[AVRDUDE](http://www.nongnu.org/avrdude/) がよく使われるソフトウェアです。このページの書き込み例でも AVRDUDE を使います。
 
 - **AVRプログラマとMiniboard II プロセッサをつなぐケーブル**
+
+#### プログラマ・ハードウェアのインストール
+ほとんどの AVR プログラマが USB で接続するもので、何らかのドライバが必要です。以下は必要なドライバの概略です。
+
+| プログラマ    | Windows | Mac OS | Linux |
+| ----------- | ------- | ------ | ----- |
+| AVRISP mkII | Atmel Studio インストール時にUSBドライバもインストールする | TBD | TBD |
+| AVR Dragon  | Atmel Studio インストール時にUSBドライバもインストールする | TBD | TBD |
+| USB-ASP2    | TBD     | 新たなドライバのインストールは不要 (10.11 El Capitan) | TBD |
 
 #### AVRDUDE のインストール
 
@@ -111,4 +120,5 @@ $ avrdude -c usbasp -p t2313 -U lfuse:w:0xcf:m -U hfuse:w:0xdf:m -U efuse:w:0xff
 
 この操作で書き込みの確認も行われるので、実行が成功すればこれで書き込みは完了です。
 
-次に動作確認です。Miniboard のファンクションスイッチを一秒程度押し続けてください。書き込みが成功していれば 440Hz の基準音がスピーカから鳴ります。さらに一秒ほど押し続けると音は止まります。
+#### 動作確認
+Miniboard のファンクションスイッチを一秒程度押し続けてください。書き込みが成功していれば 440Hz の基準音がスピーカから鳴ります。さらに一秒ほど押し続けると音は止まります。
