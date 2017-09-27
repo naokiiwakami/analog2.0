@@ -53,7 +53,7 @@ http://www.atmel.com/microsite/atmel-studio/
 - **AVRプログラマ (ソフトウェア)** <br />
   実際に書き込みを行うソフトウェアです。Atmel Studio に付属しているので、Atmel Studio が認識できるプログラマなら別にソフトウェアを用意する必要はありません。そうでない場合、[AVRDUDE](http://www.nongnu.org/avrdude/) がよく使われるソフトウェアです。このページの書き込み例でも AVRDUDE を使います。
 
-- AVRプログラマとMiniboard II プロセッサをつなぐケーブル
+- **AVRプログラマとMiniboard II プロセッサをつなぐケーブル**
 
 #### AVRDUDE のインストール
 
