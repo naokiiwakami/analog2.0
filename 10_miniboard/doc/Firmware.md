@@ -1,13 +1,14 @@
 # ファームウェア
 
 MiniBoard 2 を動かすには、AVR マイクロプロセッサ ATTiny2313 にファームウェアを書き込む必要があります。
-ファームウェアは、ビルド済みのものをこの[リポジトリからダウンロードする](../firmware/releases/miniboard_20170927.zip)か、
-ソースコードからビルドすることによって入手できます。
+ファームウェアは、ビルド済みのものをこのリポジトリからダウンロードするか、ソースコードからビルドすることによって入手できます。
 
 ### ファームウェアのダウンロード
 リポジトリ内のディレクトリ [10_miniboard/firmware/releases](../firmware/releases/)
-からファイル名についている日付の一番新しい zip ファイルをダウンロードしてください。現在の最新版は miniboard_20170927.zip です。
+からファイル名についている日付の一番新しい zip ファイルをダウンロードしてください。
+
 zip ファイル内には、以下のファイルが含まれています。
+
 - a20_midi.elf : ファームウェアイメージ 
 - a20_midi.hex : プログラム領域の hex データファイル
 - a20_midi.c : ソースコード
@@ -58,11 +59,11 @@ http://www.atmel.com/microsite/atmel-studio/
 #### プログラマ・ハードウェアのインストール
 ほとんどの AVR プログラマが USB で接続するもので、何らかのドライバが必要です。以下は必要なドライバの概略です。
 
-| プログラマ    | Windows | Mac OS | Linux |
-| ----------- | ------- | ------ | ----- |
-| AVRISP mkII | Atmel Studio インストール時にUSBドライバもインストールする | TBD | TBD |
-| AVR Dragon  | Atmel Studio インストール時にUSBドライバもインストールする | TBD | TBD |
-| USB-ASP2    | TBD     | 新たなドライバのインストールは不要 (10.11 El Capitan) | TBD |
+| プログラマ       | Windows                               | Mac OS                               | Linux |
+| ----------- | ------------------------------------- | ------------------------------------ | ----- |
+| AVRISP mkII | Atmel Studio インストール時にUSBドライバもインストールする | TBD                                  | TBD   |
+| AVR Dragon  | Atmel Studio インストール時にUSBドライバもインストールする | TBD                                  | TBD   |
+| USB-ASP2    | TBD                                   | 新たなドライバのインストールは不要 (10.11 El Capitan) | TBD   |
 
 #### AVRDUDE のインストール
 
@@ -115,7 +116,7 @@ a20_midi.hex
 次に、AVRDUDE を使ってファームウェアを書き込みます。hex ファイルには、プログラム領域のデータしか入っていないので fuse バイトも明示して書き込みます。
 
 ```
-$ avrdude -c usbasp -p t2313 -U lfuse:w:0xcf:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m -U flash:w:a20_midi.hex
+$ avrdude -c usbasp -p t2313 -U lfuse:w:0xff:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m -U flash:w:a20_midi.hex
 ```
 
 a20_midi.elf ファイルには fuse バイト情報も含まれているので、fuse にどんな値を入れるのか気にせず以下のように書き込むこともできます。ただし AVRDUDE はバージョン6以上のものを使う必要があります。

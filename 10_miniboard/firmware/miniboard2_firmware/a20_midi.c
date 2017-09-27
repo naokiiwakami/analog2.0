@@ -6,8 +6,18 @@
 /*---------------------------------------------------------*/
 /* Fuse Bytes                                              */
 /*---------------------------------------------------------*/
+// We change only fuse low byte as follows.
+// 1 1 1 0 1 1 1 1
+// | | | | | | | +-- CKSEL0 : 1
+// | | | | | | +---- CKSEL1 : 1
+// | | | | | +------ CKSEL3 : 1
+// | | | | +-------- CKSEL4 : 1 -- crystal, 8MHz or above
+// | | | +---------- SUT0   : 1
+// | | +------------ SUT1   : 1 -- startup: 16K CK, delay: 14CK + 65 ms
+// | +-------------- CKOUT  : 1
+// +---------------- CKDIV8 : 1
 FUSES = {
-    .low = FUSE_SUT0 & FUSE_SUT1,
+    .low = 0xff,
     .high = HFUSE_DEFAULT,
     .extended = EFUSE_DEFAULT
 };

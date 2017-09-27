@@ -9,7 +9,7 @@ Files
 ----------
 Fuse bytes
 ----------
-low      : 0xcf
+low      : 0xff
 high     : 0xdf (default)
 extended : 0xff (default)
 
@@ -22,4 +22,4 @@ Version 6 or later:
 $ avrdude -c usbasp -p t2313 -U lfuse:w:a20_midi.elf -U hfuse:w:a20_midi.elf -U efuse:w:a20_midi.elf -U flash:w:a20_midi.elf
 
 All versions:
-$ avrdude -c usbasp -p t2313 -U lfuse:w:0xcf:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m -U flash:w:a20_midi.hex
+$ avrdude -c usbasp -p t2313 -U lfuse:w:0xff:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m -U flash:w:a20_midi.hex
