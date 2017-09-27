@@ -47,7 +47,7 @@ http://www.atmel.com/microsite/atmel-studio/
   - Atmel / Microchip
     - AVRISP mkII http://www.atmel.com/tools/avrispmkii.aspx (Windows)
   - サードパーティー
-    - Aitendo USB-ASP2 http://www.aitendo.com/product/10259 (MacOS)
+    - Aitendo USB-ASP2 http://www.aitendo.com/product/10259 (MacOS)<br />
       元となったプログラマ http://www.fischl.de/usbasp/
 
 - **AVRプログラマ (ソフトウェア)**
