@@ -20,6 +20,7 @@
 ## 回路図
 
 [doc/miniboard_schematic.pdf](doc/miniboard_schematic.pdf)
+![miniboard_sch.png](miniboard_sch.png)
 
 ## ファームウェア
 
