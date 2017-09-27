@@ -45,9 +45,9 @@ http://www.atmel.com/microsite/atmel-studio/
   以下は、書き込みができることを確認したプログラマです。
 
   - Atmel / Microchip <br />
-    - AVRISP mkII http://www.atmel.com/tools/avrispmkii.aspx (Windows)
+    - AVRISP mkII http://www.atmel.com/tools/avrispmkii.aspx
   - サードパーティー <br />
-    - Aitendo USB-ASP2 http://www.aitendo.com/product/10259 (MacOS)<br />
+    - Aitendo USB-ASP2 http://www.aitendo.com/product/10259<br />
       元となったプログラマ http://www.fischl.de/usbasp/
 
 - **AVRプログラマ (ソフトウェア)** <br />
