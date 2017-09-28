@@ -1,7 +1,5 @@
 # ファームウェア
 
-[TOC]
-
 MiniBoard 2 を動かすには、AVR マイクロプロセッサ ATTiny2313 にファームウェアを書き込む必要があります。
 ファームウェアは、ビルド済みのものをこのリポジトリからダウンロードするか、ソースコードからビルドすることによって入手できます。
 
@@ -73,7 +71,7 @@ http://www.atmel.com/microsite/atmel-studio/
 
 この例では、AVRDUDE を C:\avrdude ディレクトリにインストールします。
 
-1. [AVRDUDE](http://www.nongnu.org/avrdude/) の[ダウンロードエリア](http://download.savannah.gnu.org/releases/avrdude/) に行き、最新版の Windows アーカイブをダウンロードします。(例: avrdude-6.3-mingw32.zip)
+1. [AVRDUDE](http://www.nongnu.org/avrdude/) の [ダウンロードエリア](http://download.savannah.gnu.org/releases/avrdude/) に行き、最新版の Windows アーカイブをダウンロードします。(例: avrdude-6.3-mingw32.zip)
 2. ディレクトリ C:\avrdude を作成します。
 3. AVRDUDE アーカイブに含まれているファイル avrdude.conf と avrdude.exe をディレクトリ C:\avrdude に解凍します。
 4. コントロールパネルを起動し、"edit environment variables" を検索します。見つかったリンクのうち、"Edit the system environment variable" をクリックすると、システムプロパティのダイアログが現れます。「環境変数」ボタンを押して、環境変数エディタを起動します。
@@ -171,6 +169,6 @@ Zadig exe ファイルをダウンロードして、USBasp デバイスが USB �
 
 ![after_install](zadig_after_install.png)
 
-インストールが行われたかどうかの確認をするためには、コントロールパネル -> ハードウェアの設定 -> デバイスマネージャを呼び出してください。libusbK USB Devices の項目に、USBasp が含まれていれば正しくインストールされています。
+インストールが行われたかどうかの確認をするためには、コントロールパネル -> ハードウェアの設定 -> デバイスマネージャを呼び出してください。libusbK USB Devices の項目に USBasp が含まれていれば、正しくインストールされています。
 
 ![device_check](zadig_device_check.png)
