@@ -1,9 +1,11 @@
 # ファームウェア
 
+[TOC]
+
 MiniBoard 2 を動かすには、AVR マイクロプロセッサ ATTiny2313 にファームウェアを書き込む必要があります。
 ファームウェアは、ビルド済みのものをこのリポジトリからダウンロードするか、ソースコードからビルドすることによって入手できます。
 
-### ファームウェアのダウンロード
+## ファームウェアのダウンロード
 リポジトリ内のディレクトリ [10_miniboard/firmware/releases](../firmware/releases/)
 からファイル名についている日付の一番新しい zip ファイルをダウンロードしてください。
 
@@ -15,7 +17,7 @@ zip ファイル内には、以下のファイルが含まれています。
 - Readme.txt : Fuse バイト情報など
 - LICENSE : ライセンスファイル
 
-### ビルド方法
+## ビルド方法
 
 ビルドには、ソフトウェア Atmel Studio 7 が必要です。
 
@@ -25,9 +27,9 @@ http://www.atmel.com/microsite/atmel-studio/
 プロジェクト `miniboard2_firmware` をビルドしてください。ファームウェアはプロジェクトディレクトリの下の `Release` ディレクトリにビルドされます。
 ファイル名は `a20_midi.elf` と `a20_midi.hex`です。
 
-### ファームウェアのプロセッサへの書き込み
+## ファームウェアのプロセッサへの書き込み
 
-#### 書き込みに必要なもの
+### 書き込みに必要なもの
 
 ファームウェアの書き込みには、以下のものが必要です。
 
@@ -56,18 +58,31 @@ http://www.atmel.com/microsite/atmel-studio/
 
 - **AVRプログラマとMiniboard II プロセッサをつなぐケーブル**
 
-#### プログラマ・ハードウェアのインストール
+### プログラマ用ドライバのインストール
 ほとんどの AVR プログラマが USB で接続するもので、何らかのドライバが必要です。以下は必要なドライバの概略です。
 
-| プログラマ       | Windows                               | Mac OS                               | Linux |
-| ----------- | ------------------------------------- | ------------------------------------ | ----- |
-| AVRISP mkII | Atmel Studio インストール時にUSBドライバもインストールする | TBD                                  | TBD   |
-| AVR Dragon  | Atmel Studio インストール時にUSBドライバもインストールする | TBD                                  | TBD   |
-| USB-ASP2    | TBD                                   | 新たなドライバのインストールは不要 (10.11 El Capitan) | TBD   |
+| プログラマ       | Windows                                 | Mac OS                               | Linux |
+| ----------- | --------------------------------------- | ------------------------------------ | ----- |
+| AVRISP mkII | Atmel Studio インストール時にUSBドライバもインストールする   | TBD                                  | TBD   |
+| AVR Dragon  | Atmel Studio インストール時にUSBドライバもインストールする   | TBD                                  | TBD   |
+| USB-ASP2    | [USBasp ドライバのインストール](#usbasp_driver) 参照 | 新たなドライバのインストールは不要 (10.11 El Capitan) | TBD   |
 
-#### AVRDUDE のインストール
+### AVRDUDE のインストール
 
-##### MacOS
+#### Windows
+
+この例では、AVRDUDE を C:\avrdude ディレクトリにインストールします。
+
+1. [AVRDUDE](http://www.nongnu.org/avrdude/) の[ダウンロードエリア](http://download.savannah.gnu.org/releases/avrdude/) に行き、最新版の Windows アーカイブをダウンロードします。(例: avrdude-6.3-mingw32.zip)
+2. ディレクトリ C:\avrdude を作成します。
+3. AVRDUDE アーカイブに含まれているファイル avrdude.conf と avrdude.exe をディレクトリ C:\avrdude に解凍します。
+4. コントロールパネルを起動し、"edit environment variables" を検索します。見つかったリンクのうち、"Edit the system environment variable" をクリックすると、システムプロパティのダイアログが現れます。「環境変数」ボタンを押して、環境変数エディタを起動します。
+5. System variables の Path に C:\avrdude を追加します。
+6. コマンドプロンプトを立ち上げて、"avrdude -v" とタイプしてください。正しくインストールされていれば、AVRDUDE のバージョンが表示されます。
+
+![avrdude](avrdude_win.png)
+
+#### MacOS
 
 [Homebrew](https://brew.sh/) というソフトウェアを使っていれば以下のように簡単にインストールできます。
 
@@ -77,15 +92,11 @@ $ brew install avrdude
 
 参考： http://macappstore.org/avrdude/
 
-##### Windows
+#### Linux
 
 TBD
 
-##### Linux
-
-TBD
-
-#### AVRプログラマを MiniBoard に接続
+### AVRプログラマを MiniBoard に接続
 
 Miniboard 2 の基板には、6本ピンのプログラミング用端子がついています。これは Atmel AVRISP のピン配置に準拠しているので、AVRISP II からプログラミングする場合は、このプログラマについているケーブルの6ピンソケットをそのままさしてください。このピン配置に準拠していないプログラマを使う場合には、そのプログラマのピンと Miniboard 2 のプログラミング端子のピン名が一致するように接続してください。
 
@@ -102,7 +113,7 @@ Miniboard 上のプログラミング端子を使わず、プロセッサ ATTiny
 | GND   | 10         |
 | RESET | 1          |
 
-#### 書き込み
+### 書き込み
 
 ここでは、Aitendo USB-ASP2 を MacOS 上で AVRDUDE を使って書き込む例を書きます。この場合には、特別にドライバソフトウェアなどをインストール必要がないので、比較的簡単に書き込みができます。
 
@@ -127,5 +138,39 @@ $ avrdude -c usbasp -p t2313 -U lfuse:w:a20_midi.elf -U hfuse:w:a20_midi.elf -U 
 
 この操作で書き込みの確認も行われるので、実行が成功すればこれで書き込みは完了です。
 
-#### 動作確認
+### 動作確認
 Miniboard のファンクションスイッチを一秒程度押し続けてください。書き込みが成功していれば 440Hz の基準音がスピーカから鳴ります。さらに一秒ほど押し続けると音は止まります。
+
+## 付録
+
+### <a name="usbasp_driver"></a>USBasp ドライバのインストール (Windows)
+
+参考：<br />
+http://www.fischl.de/usbasp/<br />
+http://ht-deko.com/arduino/usbasp.html
+
+USBasp 互換のデバイスを Windows で使うためには、ドライバをインストールする必要があります。インストールには [Zadig](http://zadig.akeo.ie/) というツールを使います。
+
+Zadig exe ファイルをダウンロードして、USBasp デバイスが USB にささっていない状態で実行してください。
+
+以下のようなユーザ・アクセス・コントロールの承認ウィンドウが現れるので、yes ボタンを押して承認します。
+
+![uac](zadig_uac.png)
+
+
+
+承認すると、Zadig アプリケーションが起動します。
+
+![initial](zadig_initial.png)
+
+ここで、USBasp デバイスを PC に接続してください。以下のように、デバイスが認識されます。デバイスのドライバはまだインストールしていないので NONE になっています。インストールするドライバとして libusbK を選んで、"Install Driver" ボタンを押してください。
+
+![before_install](zadig_before_install.png)
+
+インストールに成功すると、以下のような画面になります。
+
+![after_install](zadig_after_install.png)
+
+インストールが行われたかどうかの確認をするためには、コントロールパネル -> ハードウェアの設定 -> デバイスマネージャを呼び出してください。libusbK USB Devices の項目に、USBasp が含まれていれば正しくインストールされています。
+
+![device_check](zadig_device_check.png)
