@@ -22,6 +22,10 @@
 [doc/miniboard_schematic.pdf](doc/miniboard_schematic.pdf)
 ![miniboard_sch.png](miniboard_sch.png)
 
+## パーツリスト
+
+[miniboard_parts_list.md](miniboard_parts_list.md)
+
 ## ファームウェア
 
 MiniBoard 2 を動かすには、AVR マイクロプロセッサ ATTiny2313 にファームウェアを書き込む必要があります。
