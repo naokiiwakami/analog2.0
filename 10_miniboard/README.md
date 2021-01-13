@@ -32,4 +32,4 @@ MiniBoard 2 を動かすには、AVR マイクロプロセッサ ATTiny2313 に�
 
 ファームウェアの書き込みの方法については、[ファームウェアの解説ページを参照してください](doc/Firmware.md)。
 
-最新のビルド済みファームウェア： [firmware/releases/miniboard_20170928.zip](firmware/releases/miniboard_20170928.zip)
+最新のビルド済みファームウェア： [firmware/releases/miniboard_20210113.zip](firmware/releases/miniboard_20210113.zip)
