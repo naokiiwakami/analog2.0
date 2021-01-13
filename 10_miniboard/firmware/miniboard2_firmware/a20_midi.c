@@ -47,18 +47,16 @@ FUSES = {
 /* Serial interface for MIDI                               */
 /*---------------------------------------------------------*/
 #define UART_BAUD_RATE 31250
-#define UART_BUF_SIZE    16
+#define UART_BUF_SIZE    16  // must be power of 2
+#define UART_PTR_MASK    (UART_BUF_SIZE - 1)
 
 /* baud register value caluculation */
 #define UART_BAUD_SELECT (F_CPU / (UART_BAUD_RATE * 16l) - 1)
 
 /* input data queue and pointers */
-uint8_t uart_rx_queue[UART_BUF_SIZE];  // UART read queue. This is a ring queue with size UART_BUF_SIZE.
-volatile uint8_t uart_bytes_in_queue;  // Number of available bytes in the queue.
-uint8_t *uart_rx_push_ptr;             // Queue pointer for pushing data
-uint8_t *uart_rx_pull_ptr;             // Queue pointer for pulling data
-
-// volatile uint16_t rxByte;
+volatile uint8_t uart_rx_queue[UART_BUF_SIZE];  // UART read queue. This is a ring queue with size UART_BUF_SIZE.
+volatile uint8_t uart_rx_producer_pos;
+volatile uint8_t uart_rx_consumer_pos;
 
 /*---------------------------------------------------------*/
 /* MIDI decoder                                            */
@@ -92,6 +90,9 @@ uint8_t *uart_rx_pull_ptr;             // Queue pointer for pulling data
 #define SYSEX_IN  0xF0
 #define SYSEX_OUT 0xF7
 
+/* MIDI System Real-Time Messages */
+#define TIMINIG_CLOCK  0xf8  // The lowest number in the real-time messages
+
 #define MAX_DATA 0x7F
 
 /* Notes */
@@ -114,6 +115,9 @@ volatile uint8_t midi_data_ptr;    // MIDI data buffer pointer
 volatile uint8_t midi_data_length; // Expected MIDI data length
 volatile uint8_t midi_data_ready;  // data ready flag
 
+static void set_cv();
+static void pitch_bend(uint8_t lsb, uint8_t msg);
+
 /*---------------------------------------------------------*/
 /* Controllers                                             */
 /*---------------------------------------------------------*/
@@ -126,8 +130,8 @@ volatile uint8_t  voices_Notes[MAX_NOTE_COUNT];
 
 // other controller values
 // Note that these values are not always equivalent to actual
-// CV values since we aply anti-click mechanism in reflecting these
-// values to CV to avoid transient noise.
+// CV values since we apply anti-click mechanism to the CV values in
+// transition to make the pitch change smooth.
 volatile uint16_t ctrl_PitchBend;
 volatile uint8_t ctrl_PitchBend_updating;
 
@@ -153,8 +157,8 @@ void init_uart(void)
     UBRRL = (uint8_t)baud;
     UCSRB = (1<<RXCIE)|(1<<RXEN);
 
-    uart_rx_push_ptr = uart_rx_pull_ptr = uart_rx_queue;
-    uart_bytes_in_queue = 0;
+    uart_rx_producer_pos = 0;
+    uart_rx_consumer_pos = 0;
 }
 
 /**
@@ -191,9 +195,13 @@ void init_timer(void)
 
 void init_midi_controllers()
 {
-    ctrl_PitchBend = 8192 >> 4; // 0x20 0x00
+    // ctrl_PitchBend = 8192 >> 4; // 0x20 0x00
     ctrl_PitchBend_updating = 0;
+    pitch_bend(0x00, 0x40);  // set neutral
+    
     voices_NotesCount = 0;
+    voice_CurrentNote = 68;  // A4
+    set_cv();
 
     // Set target MIDI channel.  If the button is on, we read the channel from the octave switch.
     // Otherwise the channel is 1 (but the internal value is zero based).
@@ -243,13 +251,8 @@ void init_midi_decoder()
  */
 ISR(USART_RX_vect)
 {
-
-    cli();
-    *uart_rx_push_ptr = UDR;   /* read a byte from receive register */
-    ++uart_bytes_in_queue;
-    if (++uart_rx_push_ptr >= uart_rx_queue + UART_BUF_SIZE) // increment the pointer
-        uart_rx_push_ptr = uart_rx_queue;
-    sei();
+    uart_rx_queue[uart_rx_producer_pos++] = UDR;
+    uart_rx_producer_pos &= UART_PTR_MASK;
 }
 
 /**
@@ -258,15 +261,9 @@ ISR(USART_RX_vect)
  */
 int16_t uart_getchar(void)
 {
-    uint8_t c;
-
-    if (uart_bytes_in_queue > 0) {
-        cli();
-        --uart_bytes_in_queue;
-        c = *uart_rx_pull_ptr; /* pull a character from queue */
-        if (++uart_rx_pull_ptr >= uart_rx_queue + UART_BUF_SIZE) /* increment the pointer */
-            uart_rx_pull_ptr = uart_rx_queue;
-        sei();
+    if (uart_rx_consumer_pos != uart_rx_producer_pos) {
+        uint8_t c = uart_rx_queue[uart_rx_consumer_pos++];  // consume a byte from the queue
+        uart_rx_consumer_pos &= UART_PTR_MASK;
         return c;
     } else {
         return -1; /* queue is empty */
@@ -279,7 +276,7 @@ int16_t uart_getchar(void)
 /**
  * Set CV PWM ratio by current note
  */
-void SetCV()
+void set_cv()
 {
     uint8_t pwm_value;
     pwm_value = voice_CurrentNote > C0 ? voice_CurrentNote - C0 : 1;
@@ -334,7 +331,7 @@ void note_off(uint8_t note_number)
     else {
         // Update the CV to current highest.  Keep the gate on.
         voice_CurrentNote = voices_Notes[0];
-        SetCV();
+        set_cv();
     }
 }
 
@@ -364,7 +361,7 @@ void note_on(uint8_t note_number, uint8_t velocity)
         ++voices_NotesCount;
         voices_Notes[0] = note_number;
         voice_CurrentNote = note_number;
-        SetCV();
+        set_cv();
         GATE1_ON();
     }
 
@@ -397,7 +394,7 @@ void note_on(uint8_t note_number, uint8_t velocity)
 
     voice_CurrentNote =  voices_Notes[0];
 
-    SetCV();
+    set_cv();
     GATE1_ON();
 }
 
@@ -450,8 +447,13 @@ void handle_midi_channel_message()
     }
 }
 
-void digest(uint16_t rxByte)
+void consume_midi_byte(uint16_t rxByte)
 {
+    if (rxByte >= TIMINIG_CLOCK) {
+      // we break here to avoid the system real-time message affects the midi_status.
+      return;
+    }
+  
     if (isSystemExclusive(midi_status)) {
         if (rxByte == SYSEX_OUT) {
             midi_status = SYSEX_OUT;
@@ -579,7 +581,7 @@ int main(void)
     while (true) {
         uint16_t rxByte = uart_getchar();
         if (rxByte != -1) {
-            digest(rxByte);
+            consume_midi_byte(rxByte);
         }
     }
 }
