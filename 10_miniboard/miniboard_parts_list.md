@@ -88,4 +88,4 @@
 | S14  | タクトスイッチ      |                   | Function Switch  |
 | SP1  | ピエゾスピーカ      |                   |                  |
 | SW1  | ロータリーDIPスイッチ |                   | Octave/MIDI Ch   |
-| U1   | フォトカプラ       | TLP552            |                  |
+| U1   | フォトカプラ       | TLP552            | 6N137 でも可      |
