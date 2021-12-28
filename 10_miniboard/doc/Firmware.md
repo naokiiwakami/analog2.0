@@ -113,7 +113,11 @@ Miniboard 上のプログラミング端子を使わず、プロセッサ ATTiny
 
 ### 書き込み
 
-ここでは、Aitendo USB-ASP2 を MacOS 上で AVRDUDE を使って書き込む例を書きます。この場合には、特別にドライバソフトウェアなどをインストール必要がないので、比較的簡単に書き込みができます。
+ここでは、Aitendo USB-ASP2 を MacOS 上で AVRDUDE を使って書き込む例を書きます。この場合には、Windows 以外では特別にドライバソフトウェアなどをインストール必要がないので、比較的簡単に書き込みができます。
+
+USB-ASP2 の出力は 6 ピンではなく 10 ピンです。本体側（オス）コネクタのピン配置は以下の通りです。
+
+![ten_pins_pinout.png]
 
 まずは、ファームウェアイメージのあるディレクトリに移動して、イメージファイルがあることを確認します。
 
@@ -135,6 +139,12 @@ $ avrdude -c usbasp -p t2313 -U lfuse:w:a20_midi.elf -U hfuse:w:a20_midi.elf -U 
 ```
 
 この操作で書き込みの確認も行われるので、実行が成功すればこれで書き込みは完了です。
+
+参考までに、AVRDUDE の簡単なヘルプは -h オプション (`avrdude -h`) で見られますがあまり詳しくありません。
+詳しいマニュアルは https://www.nongnu.org/avrdude/user-manual/avrdude.html で読むことができます。
+
+特にコマンドラインオプションはこちらのページに詳しく書かれています。
+https://www.nongnu.org/avrdude/user-manual/avrdude_3.html#Option-Descriptions
 
 ### 動作確認
 Miniboard のファンクションスイッチを一秒程度押し続けてください。書き込みが成功していれば 440Hz の基準音がスピーカから鳴ります。さらに一秒ほど押し続けると音は止まります。
