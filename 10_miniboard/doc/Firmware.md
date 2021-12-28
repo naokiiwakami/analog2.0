@@ -117,7 +117,7 @@ Miniboard 上のプログラミング端子を使わず、プロセッサ ATTiny
 
 USB-ASP2 の出力は 6 ピンではなく 10 ピンです。本体側（オス）コネクタのピン配置は以下の通りです。
 
-![ten_pins_pinout.png]
+![ten_pins_pinout](ten_pins_pinout.png)
 
 まずは、ファームウェアイメージのあるディレクトリに移動して、イメージファイルがあることを確認します。
 
@@ -140,10 +140,14 @@ $ avrdude -c usbasp -p t2313 -U lfuse:w:a20_midi.elf -U hfuse:w:a20_midi.elf -U 
 
 この操作で書き込みの確認も行われるので、実行が成功すればこれで書き込みは完了です。
 
-参考までに、AVRDUDE の簡単なヘルプは -h オプション (`avrdude -h`) で見られますがあまり詳しくありません。
-詳しいマニュアルは https://www.nongnu.org/avrdude/user-manual/avrdude.html で読むことができます。
+参考までに、AVRDUDE の簡単なヘルプは -h オプション (`avrdude -h`) で見られますがあまり詳しくありません。詳しいマニュアルは
 
-特にコマンドラインオプションはこちらのページに詳しく書かれています。
+https://www.nongnu.org/avrdude/user-manual/avrdude.html
+
+で読むことができます。
+
+コマンドラインオプションはこちらのページに詳しく書かれています。
+
 https://www.nongnu.org/avrdude/user-manual/avrdude_3.html#Option-Descriptions
 
 ### 動作確認
@@ -164,8 +168,6 @@ Zadig exe ファイルをダウンロードして、USBasp デバイスが USB �
 以下のようなユーザ・アクセス・コントロールの承認ウィンドウが現れるので、yes ボタンを押して承認します。
 
 ![uac](zadig_uac.png)
-
-
 
 承認すると、Zadig アプリケーションが起動します。
 
