@@ -1,6 +1,6 @@
 # ファームウェア
 
-MiniBoard 2 を動かすには、AVR マイクロプロセッサ ATTiny2313 にファームウェアを書き込む必要があります。
+MiniBoard 2 を動かすには、AVR マイクロコントローラ ATTiny2313 にファームウェアを書き込む必要があります。
 ファームウェアは、ビルド済みのものをこのリポジトリからダウンロードするか、ソースコードからビルドすることによって入手できます。
 
 ## ファームウェアのダウンロード
@@ -9,7 +9,7 @@ MiniBoard 2 を動かすには、AVR マイクロプロセッサ ATTiny2313 に�
 
 zip ファイル内には、以下のファイルが含まれています。
 
-- a20_midi.elf : ファームウェアイメージ 
+- a20_midi.elf : ファームウェアイメージ
 - a20_midi.hex : プログラム領域の hex データファイル
 - a20_midi.c : ソースコード
 - Readme.txt : Fuse バイト情報など
@@ -25,7 +25,7 @@ http://www.atmel.com/microsite/atmel-studio/
 プロジェクト `miniboard2_firmware` をビルドしてください。ファームウェアはプロジェクトディレクトリの下の `Release` ディレクトリにビルドされます。
 ファイル名は `a20_midi.elf` と `a20_midi.hex`です。
 
-## ファームウェアのプロセッサへの書き込み
+## ファームウェアのコントローラへの書き込み
 
 ### 書き込みに必要なもの
 
@@ -59,11 +59,11 @@ http://www.atmel.com/microsite/atmel-studio/
 ### プログラマ用ドライバのインストール
 ほとんどの AVR プログラマが USB で接続するもので、何らかのドライバが必要です。以下は必要なドライバの概略です。
 
-| プログラマ       | Windows                                 | Mac OS                               | Linux |
-| ----------- | --------------------------------------- | ------------------------------------ | ----- |
-| AVRISP mkII | Atmel Studio インストール時にUSBドライバもインストールする   | TBD                                  | TBD   |
-| AVR Dragon  | Atmel Studio インストール時にUSBドライバもインストールする   | TBD                                  | TBD   |
-| USB-ASP2    | [USBasp ドライバのインストール](#usbasp_driver) 参照 | 新たなドライバのインストールは不要 (10.11 El Capitan) | TBD   |
+| プログラマ  | Windows                                                    | Mac OS                                                | Linux |
+| ----------- | ---------------------------------------------------------- | ----------------------------------------------------- | ----- |
+| AVRISP mkII | Atmel Studio インストール時にUSBドライバもインストールする | TBD                                                   | TBD   |
+| AVR Dragon  | Atmel Studio インストール時にUSBドライバもインストールする | TBD                                                   | TBD   |
+| USB-ASP2    | [USBasp ドライバのインストール](#usbasp_driver) 参照       | 新たなドライバのインストールは不要 (10.11 El Capitan) | TBD   |
 
 ### AVRDUDE のインストール
 
@@ -71,7 +71,7 @@ http://www.atmel.com/microsite/atmel-studio/
 
 この例では、AVRDUDE を C:\avrdude ディレクトリにインストールします。
 
-1. [AVRDUDE](http://www.nongnu.org/avrdude/) の [ダウンロードエリア](http://download.savannah.gnu.org/releases/avrdude/) に行き、最新版の Windows アーカイブをダウンロードします。(例: avrdude-6.3-mingw32.zip)
+1. [AVRDUDE Github レポジトリ](https://github.com/avrdudes/avrdude) の [Releases](https://github.com/avrdudes/avrdude/releases) に行き、最新版の Windows アーカイブをダウンロードします。(例: avrdude-v8.1-windows-x64.zip)
 2. ディレクトリ C:\avrdude を作成します。
 3. AVRDUDE アーカイブに含まれているファイル avrdude.conf と avrdude.exe をディレクトリ C:\avrdude に解凍します。
 4. コントロールパネルを起動し、"edit environment variables" を検索します。見つかったリンクのうち、"Edit the system environment variable" をクリックすると、システムプロパティのダイアログが現れます。「環境変数」ボタンを押して、環境変数エディタを起動します。
@@ -103,13 +103,13 @@ Miniboard 2 の基板には、6本ピンのプログラミング用端子がつ�
 Miniboard 上のプログラミング端子を使わず、プロセッサ ATTiny2313 に直接書き込む場合には、以下のようにピンをつないでください。
 
 | プログラマ | プロセッサのピン番号 |
-| ----- | ---------- |
-| +Vcc  | 20         |
-| SCK   | 19         |
-| MISO  | 18         |
-| MOSI  | 17         |
-| GND   | 10         |
-| RESET | 1          |
+| ---------- | -------------------- |
+| +Vcc       | 20                   |
+| SCK        | 19                   |
+| MISO       | 18                   |
+| MOSI       | 17                   |
+| GND        | 10                   |
+| RESET      | 1                    |
 
 ### 書き込み
 
@@ -132,6 +132,8 @@ a20_midi.hex
 $ avrdude -c usbasp -p t2313 -U lfuse:w:0xff:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m -U flash:w:a20_midi.hex
 ```
 
+`-c` オプションで指定するプログラマが `usbasp` で動かないようでしたら `usbasp-clone` を試してみてください。
+
 a20_midi.elf ファイルには fuse バイト情報も含まれているので、fuse にどんな値を入れるのか気にせず以下のように書き込むこともできます。ただし AVRDUDE はバージョン6以上のものを使う必要があります。
 
 ```
@@ -142,13 +144,13 @@ $ avrdude -c usbasp -p t2313 -U lfuse:w:a20_midi.elf -U hfuse:w:a20_midi.elf -U 
 
 参考までに、AVRDUDE の簡単なヘルプは -h オプション (`avrdude -h`) で見られますがあまり詳しくありません。詳しいマニュアルは
 
-https://www.nongnu.org/avrdude/user-manual/avrdude.html
+https://avrdudes.github.io/avrdude/
 
 で読むことができます。
 
 コマンドラインオプションはこちらのページに詳しく書かれています。
 
-https://www.nongnu.org/avrdude/user-manual/avrdude_3.html#Option-Descriptions
+https://avrdudes.github.io/avrdude/8.1/avrdude_4.html#Option-Descriptions
 
 ### 動作確認
 Miniboard のファンクションスイッチを一秒程度押し続けてください。書き込みが成功していれば 440Hz の基準音がスピーカから鳴ります。さらに一秒ほど押し続けると音は止まります。
@@ -174,6 +176,12 @@ Zadig exe ファイルをダウンロードして、USBasp デバイスが USB �
 ![initial](zadig_initial.png)
 
 ここで、USBasp デバイスを PC に接続してください。以下のように、デバイスが認識されます。デバイスのドライバはまだインストールしていないので NONE になっています。インストールするドライバとして libusbK を選んで、"Install Driver" ボタンを押してください。
+
+**注意:** 新しい版のウィンドウズもしくは avrdude ではドライバは `libusb-win32` を選ぶ必要があるようです。もし以下のようなエラーが出た場合 `libusb-win32` ドライバをインストールしてみてください
+
+```
+avrdude: error: could not find USB device with vid=0x16c0 pid=0x5dc vendor='www.fischl.de' product='USBasp'
+```
 
 ![before_install](zadig_before_install.png)
 
